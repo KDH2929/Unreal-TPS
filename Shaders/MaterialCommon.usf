@@ -1,0 +1,33 @@
+//공통
+float2 uv = Parameters.TexCoords[0].xy;
+float3 normalWS = Parameters.WorldNormal;
+float3 lightDir = View.DirectionalLightDirection;
+float3 cameraDir = Parameters.CameraVector;
+float3 diffuse = Texture2DSample(_DiffuseTexture, _DiffuseTextureSampler, uv).rgb;
+float halfLambert = 0.5 * dot(normalWS, lightDir) + 0.5;
+
+// AO
+float aoTexture = Texture2DSample(_AOTexture, _AOTextureSampler, uv).r;
+float ao = lerp(1, aoTexture, _AOWeight);
+float halfLambertAO = halfLambert * ao;
+
+// shadow
+float3 shadowColored;
+if(_UseRamp > 0.5)
+{
+	shadowColored = Texture2DSample(_RampTexture, _RampTextureSampler, float2(halfLambertAO, 0.5)).rgb;
+}
+else
+{
+	float shadow = smoothstep(_ShadowRange - _ShadowSmooth, _ShadowRange + _ShadowSmooth, halfLambertAO);
+	shadowColored = lerp(_ShadowColor, 1, shadow);
+}
+
+// rim
+float NoC = saturate(dot(normalWS, cameraDir));
+float rim = pow(1 - NoC, _RimPow1) * _RimPow2;
+
+//final
+float3 temp = shadowColored * diffuse;
+float3 final = temp + rim;
+return final;

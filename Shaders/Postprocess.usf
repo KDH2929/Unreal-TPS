@@ -1,0 +1,173 @@
+//공통
+float2 uv = Parameters.TexCoords[0].xy;
+float posx[4] = {1.0, -1.0, 0.0, 0.0};
+float posy[4] = {0.0, 0.0, 1.0, -1.0};
+int i;
+
+//씬 마스크
+float3 ST_PPI0 = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 14), 14, false).rgb;
+float3 ST_BaseColor = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 26), 26, false).rgb;
+float ST_ShadingModel = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 22), 22, false).b * 4;
+if(ST_ShadingModel >= 1.0)
+	ST_ShadingModel = 1.0;
+else
+	ST_ShadingModel = 0.0;
+float3 SceneMask = lerp(ST_PPI0, ST_BaseColor * _Brightness, ST_ShadingModel);
+
+
+//outer outline
+float fixedScene = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 22), 22, false).b;
+float2 invSizeOuter = GetSceneTextureViewSize(22).zw;
+float widthOuter = _OuterOutlineWidth;
+float moved[4];
+for(i = 0; i < 4; i++)
+{
+	float2 offset = invSizeOuter * float2(posx[i], posy[i]) * widthOuter;
+	float2 uvOffset = uv + offset;
+	float2 uvClamp = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvOffset, 22), 22);
+	moved[i] = fixedScene - SceneTextureLookup(uvClamp, 22, false).b;
+}
+float movedSum = moved[0] + moved[1] + moved[2] + moved[3];
+float outerOutline = clamp(movedSum, 0.0, 1.0);
+
+
+//Normal Outline
+float3 fixedSceneNormal = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 8), 8, false).rgb;
+float2 invSizeNormal = GetSceneTextureViewSize(8).zw;
+float widthNormal = _NormalOutlineWidth;
+float3 movedSceneNormal[4];
+for(i = 0; i < 4; i++)
+{
+	float2 offsetNormal = invSizeNormal * float2(posx[i], posy[i]) * widthNormal;
+	float2 uvOffsetNormal = uv + offsetNormal;
+	float2 uvClampNormal = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvOffsetNormal, 8), 8);
+	movedSceneNormal[i] = fixedSceneNormal - SceneTextureLookup(uvClampNormal, 8, false).rgb;
+}
+float3 movedSumNormal = movedSceneNormal[0] + movedSceneNormal[1] + movedSceneNormal[2] + movedSceneNormal[3];
+float3 movedClampNormal = clamp(movedSumNormal * _NormalOutlineDepth, 0.0, 1.0);
+float outlineBaseNormal = ((abs(movedClampNormal - 0.51) > 0.00001) ? ((movedClampNormal >= 0.51) ? 1.0 : 0.0) : 0.0);
+//Normal Outline Mask
+float2 invSizeMask = GetSceneTextureViewSize(22).zw;
+float movedSceneMaskNormal[4];
+for(i = 0; i < 4; i++)
+{
+	float2 offsetMaskNormal = invSizeMask * float2(posx[i], posy[i]) * widthNormal;
+	float2 uvOffsetMaskNormal = uv + offsetMaskNormal;
+	float2 uvClampMaskNormal = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvOffsetMaskNormal, 22), 22);
+	movedSceneMaskNormal[i] = SceneTextureLookup(uvClampMaskNormal, 22, false).b;
+}
+float movedSumMaskNormal = movedSceneMaskNormal[0] + movedSceneMaskNormal[1] + movedSceneMaskNormal[2] + movedSceneMaskNormal[3];
+float outlineMaskNormal;
+if(movedSumMaskNormal >= 1.0)
+	outlineMaskNormal = 1.0;
+else
+	outlineMaskNormal = 0.0;
+float3 normalOutline = lerp(float3(0.0, 0.0, 0.0), outlineBaseNormal, outlineMaskNormal);
+
+
+//Depth Outline
+float3 fixedSceneDepth = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 1), 1, false).rgb;
+float2 invSizeDepth = GetSceneTextureViewSize(1).zw;
+float widthDepth = _DepthOutlineWidth;
+float3 movedSceneDepth[4];
+for(i = 0; i < 4; i++)
+{
+	float2 offsetDepth = invSizeDepth * float2(posx[i], posy[i]) * widthDepth;
+	float2 uvOffsetDepth = uv + offsetDepth;
+	float2 uvClampDepth = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvOffsetDepth, 1), 1);
+	movedSceneDepth[i] = fixedSceneDepth - SceneTextureLookup(uvClampDepth, 1, false).rgb;
+}
+float3 movedSumDepth = movedSceneDepth[0] + movedSceneDepth[1] + movedSceneDepth[2] + movedSceneDepth[3];
+float3 movedClampDepth = clamp(movedSumDepth * _DepthOutlineDepth, 0.0, 1.0);
+float outlineBaseDepth = ((abs(movedClampDepth - 0.51) > 0.00001) ? ((movedClampDepth >= 0.51) ? 1.0 : 0.0) : 0.0);
+//Depth Outline Mask
+float movedSceneMaskDepth[4];
+for(i = 0; i < 4; i++)
+{
+	float2 offsetMaskDepth = invSizeMask * float2(posx[i], posy[i]) * widthDepth;
+	float2 uvOffsetMaskDepth = uv;// + offsetMaskDepth; //외곽도 depth기반으로 칠하고 싶으면 주석 해제
+	float2 uvClampMaskDepth = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvOffsetMaskDepth, 22), 22);
+	movedSceneMaskDepth[i] = SceneTextureLookup(uvClampMaskDepth, 22, false).b;
+}
+float movedSumMaskDepth = movedSceneMaskDepth[0] + movedSceneMaskDepth[1] + movedSceneMaskDepth[2] + movedSceneMaskDepth[3];
+float outlineMaskDepth;
+if(movedSumMaskDepth >= 1.0)
+	outlineMaskDepth = 1.0;
+else
+	outlineMaskDepth = 0.0;
+float3 depthOutline = lerp(float3(0.0, 0.0, 0.0), outlineBaseDepth, outlineMaskDepth);
+
+
+//Subsurface blue Outline
+float fixedSceneSubsurface = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 4), 4, false).b;
+float2 invSizeSubsurface = GetSceneTextureViewSize(8).zw;
+float widthSubsurface = _SubsurfaceOutlineWidth;
+float movedSceneSubsurface[4];
+for(i = 0; i < 4; i++)
+{
+	float2 offsetSubsurface = invSizeSubsurface * float2(posx[i], posy[i]) * widthSubsurface;
+	float2 uvOffsetSubsurface = uv + offsetSubsurface;
+	float2 uvClampSubsurface = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvOffsetSubsurface, 4), 4);
+	movedSceneSubsurface[i] = fixedSceneSubsurface - SceneTextureLookup(uvClampSubsurface, 4, false).b;
+}
+float movedSumSubsurface = movedSceneSubsurface[0] + movedSceneSubsurface[1] + movedSceneSubsurface[2] + movedSceneSubsurface[3];
+float3 outlineBaseSubsurface = clamp(movedSumSubsurface, 0.0, 1.0);
+//Subsurface Outline Mask
+float2 uvClampMaskSubsurface = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uv, 22), 22);
+float SceneMaskSubsurface = SceneTextureLookup(uvClampMaskSubsurface, 22, false).b;
+float SumMaskSubsurface = SceneMaskSubsurface * 4;
+float outlineMaskSubsurface;
+if(SumMaskSubsurface >= 1.0)
+	outlineMaskSubsurface = 1.0;
+else
+	outlineMaskSubsurface = 0.0;
+float SubsurfaceOutline = lerp(float3(0.0, 0.0, 0.0), outlineBaseSubsurface, outlineMaskSubsurface);
+
+//Subsurface red Outline mask
+float fixedSceneRedMask = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 4), 4, false).r;
+float widthRedMask = _OutlineRedMaskWidth;
+float movedSceneRedMask[4];
+for(i = 0; i < 4; i++)
+{
+	float2 offsetRedMask = invSizeSubsurface * float2(posx[i], posy[i]) * widthRedMask;
+	float2 uvOffsetRedMask = uv + offsetRedMask;
+	float2 uvClampRedMask = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvOffsetRedMask, 4), 4);
+	movedSceneRedMask[i] = SceneTextureLookup(uvClampRedMask, 4, false).r;
+}
+float movedSumRedMask = movedSceneRedMask[0] + movedSceneRedMask[1] + movedSceneRedMask[2] + movedSceneRedMask[3];
+float3 outlineRedMask = clamp(movedSumRedMask, 0.0, 1.0);
+
+
+//fake hair shadow
+//움직인 머리카락 영역
+float2 position = float2(_FakeShadowPosX * 0.1, _FakeShadowPosY * 0.1);
+float2 uvMoved = uv + position;
+float2 uvClampHair = ClampSceneTextureUV(ViewportUVToSceneTextureUV(uvMoved, 7), 7);
+float movedhair = SceneTextureLookup(uvClampHair, 7, false).r;
+if(movedhair > 0.5)
+	movedhair = 1;
+else
+	movedhair = 0;
+//기존 머리카락 영역
+float fixedhair = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 7), 7, false).r;
+if(fixedhair > 0.5)
+	fixedhair = 1;
+else
+	fixedhair = 0;	
+//기존 얼굴과 머리카락 영역
+float facehair = SceneTextureLookup(GetDefaultSceneTextureUV(Parameters, 7), 7, false).r;
+if(facehair > 0.2)
+	facehair = 1;
+else
+	facehair = 0;
+//shadow 적용
+float shadow = movedhair * (1 - fixedhair);
+float faceonly = clamp(facehair - fixedhair, 0.0, 1.0);
+float3 applyShadow = lerp(1, _FakeShadowColor, shadow * faceonly);
+
+
+//final
+float3 allOutline = clamp(outerOutline + normalOutline + depthOutline + SubsurfaceOutline - outlineRedMask, 0.0, 1.0);
+float3 colorOutline = lerp(SceneMask, _OutlineColor, allOutline);
+float3 final = colorOutline * applyShadow;
+return  final;

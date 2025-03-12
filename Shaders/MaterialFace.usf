@@ -1,0 +1,46 @@
+//공통
+float2 uv = Parameters.TexCoords[0].xy;
+float3 lightDir = View.DirectionalLightDirection;
+float3 normalWS = Parameters.WorldNormal;
+float3 cameraDir = Parameters.CameraVector;
+float3 diffuse = Texture2DSample(_DiffuseTexture, _DiffuseTextureSampler, uv).rgb;
+float halfLambert = 0.5 * dot(normalWS, lightDir) + 0.5;
+
+// sdf shadow
+float3 shadowColored;
+if(_UseRamp > 0.5)
+{
+	shadowColored = Texture2DSample(_RampTexture, _RampTextureSampler, float2(halfLambert, 0.5)).rgb;
+}
+else
+{
+	float3 localLeft = float3(1, 0, 0);
+	float3 localBack = float3(0, -1, 0);
+	float2 worldLeft = TransformLocalVectorToWorld(Parameters, localLeft).rg;
+	float2 worldBack = TransformLocalVectorToWorld(Parameters, localBack).rg;
+	float2 lightDir2D = normalize(lightDir.rg);
+	float textureChoice = dot(worldLeft, lightDir2D);
+	float2 textureUV;
+	if(textureChoice > 0.0)
+		textureUV = uv * float2(1.0, 1.0);
+	else
+		textureUV = uv * float2(-1.0, 1.0);
+	float sdfDirection = Texture2DSample(_SdfTexture, _SdfTextureSampler, textureUV).r;
+	float threshold = dot(worldBack, lightDir2D) * 0.5 + 0.5;
+	float sdfRange = smoothstep(threshold - _ShadowSmooth, threshold + _ShadowSmooth, sdfDirection);
+	shadowColored = lerp(_ShadowColor, 1, sdfRange);
+}
+
+
+// rim
+float NoC = saturate(dot(normalWS, cameraDir));
+float rim = pow(1 - NoC, _RimPow1) * _RimPow2;
+
+// emission
+float3 emission = Texture2DSample(_EmissionTexture, _EmissionTextureSampler, uv).rgb * _Emission;
+
+// final
+float3 temp1 = shadowColored * diffuse;
+float3 temp2 = temp1 + rim;
+float3 final = temp2 + emission;
+return final;

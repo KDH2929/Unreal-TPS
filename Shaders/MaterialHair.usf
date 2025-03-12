@@ -1,0 +1,49 @@
+//공통
+float2 uv = Parameters.TexCoords[0].xy;
+float3 normalWS = Parameters.WorldNormal;
+float3 lightDir = View.DirectionalLightDirection;
+float3 cameraDir = Parameters.CameraVector;
+float3 diffuse = Texture2DSample(_DiffuseTexture, _DiffuseTextureSampler, uv).rgb;
+float halfLambert = 0.5 * dot(normalWS, lightDir) + 0.5;
+float3 ViewVec = -mul(float3(0.0,0.0,1.0), (float3x3)(View.ViewToTranslatedWorld)); //ResolvedView.ViewToTranslatedWorld
+
+// AO
+float aoTexture = Texture2DSample(_AOTexture, _AOTextureSampler, uv).r;
+float ao = lerp(1, aoTexture, _AOWeight);
+float halfLambertAO = halfLambert * ao;
+
+// shadow
+float3 shadowColored;
+if(_UseRamp > 0.5)
+{
+	shadowColored = Texture2DSample(_RampTexture, _RampTextureSampler, float2(halfLambertAO, 0.5)).rgb;
+}
+else
+{
+	float shadow = smoothstep(_ShadowRange - _ShadowSmooth, _ShadowRange + _ShadowSmooth, halfLambertAO);
+	shadowColored = lerp(_ShadowColor, 1, shadow);
+}
+
+// rim
+float NoC = saturate(dot(normalWS, cameraDir));
+float rim = pow(1 - NoC, _RimPow1) * _RimPow2;
+
+// hair specular
+float3 SpecularMaskTexture = Texture2DSample(_SpecularMaskTex, _SpecularMaskTexSampler, uv);
+float3 HalfVec = normalize(lightDir + ViewVec);
+float HoN = saturate(dot(HalfVec, normalWS));
+float BlinnSpecular = max(pow(HoN, _SpecPow), 0);				// Blinn-Phong Specular
+float NonMetalRange = step(_NonMetalThreshold, SpecularMaskTexture.r) - step(_MetalThreshold, SpecularMaskTexture.r);			// 밝기의 Threshord를 기준으로 금속/비금속 Specular 부분을 지정
+float3 NonMetalSpecular = BlinnSpecular * NonMetalRange * _NonMetalIntensity;
+float3 VertexNormalVS = TransformWorldVectorToView(normalWS);
+float2 MatcapUV = (VertexNormalVS.xy * float2(1, -1) + float2(1, 1)) * float2(0.5, 0.5);			// -1~1 사이의 UV 값을 0~1 사이 범위로 만들기
+float4 MatcapTexture = Texture2DSample(_MatcapTex, _MatcapTexSampler, MatcapUV);
+float MetalRange = step(_MetalThreshold, SpecularMaskTexture.r);
+float3 MetalSpecular = MatcapTexture.rgb * HoN * SpecularMaskTexture.rgb * MetalRange * _MetalIntensity;
+float3 Specular = min(lerp(NonMetalSpecular, MetalSpecular, MetalRange) * _SpecularIntensity, 0.5);
+
+//final
+float3 temp1 = shadowColored * diffuse;
+float3 temp2 = temp1 + rim;
+float3 final = temp2 + Specular;
+return final;
