@@ -7,8 +7,6 @@
 
 Unreal Engine에서의 Cartoon Shader 는 팀원들과 함께 같이 만들었으며, [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 많이 참고하였습니다.
 
-나머지 아래에 적힌 게임과 관련된 요소들은 팀 프로젝트와는 별개로 제가 전부 구현하였습니다.
-
 <br>
 
 [유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
