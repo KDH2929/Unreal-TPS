@@ -11,7 +11,7 @@ Unreal Engine에서의 Cartoon Shader 는 팀원들과 함께 같이 만들었�
 
 [유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
 
-[NPR Rendering 학부연구생 보고서](https://github.com/KDH2929/Unreal_TPS/blob/main/12191557%20%EA%B9%80%EB%8F%99%ED%99%98%20%ED%95%99%EB%B6%80%EC%97%B0%EA%B5%AC%EC%83%9D%20%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf)
+[NPR Rendering 공부한 것(https://wandering-rumba-865.notion.site/1fcaba645d3280af94a7eb07e61dd6de?pvs=74)]
 
 <br>
 
