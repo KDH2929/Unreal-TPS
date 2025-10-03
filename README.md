@@ -5,7 +5,18 @@
 **개발 기간** : 2달<br>
 **팀 구성** : 3인팀
 
-[Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 따라서 Toon Shader를 팀원들과 만들어보는 게 목표였고, 아래 요소들은 Toon Shader 만든 걸 기반으로 제가 따로 만든 요소들입니다.
+[Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 따라서 Toon Shader를 팀원들과 만들어보는 게 목표였습니다.
+
+
+아래 구현목록들은 팀원들과 Toon Shader 만든 걸 기반으로 제가 따로 유튜브 영상 찾아보면서 만든 요소들입니다.
+
+TPS는 블루프린트로 구현한 유튜브 강의영상을 따라서 C++로 옮기는 작업을 해보고자 했었습니다.
+https://www.youtube.com/watch?v=H_Q57Yso9mM&list=PLY2663dNRL_iCP0xsW6xw0Ph94ApT7JrR
+
+지형렌더링은 아래 유튜브 강의영상을 따라서 만들어보고자 하였습니다.
+https://www.youtube.com/watch?v=9ASgfwzNvL8&list=PLyL5ZNukfVqskz_OkMdrLamiYg1sITyic
+
+
 
 <br>
 
@@ -51,7 +62,7 @@
 ---
 
 ### 3. **인벤토리**  
-- **배열 & HashMap 활용**
+- **배열과 HashMap 활용**
   
   - Key: 아이템 이름  
   - Value: 수량 및 UI 텍스처 정보 저장  
