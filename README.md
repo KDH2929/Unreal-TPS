@@ -5,22 +5,39 @@
 **개발 기간** : 2달<br>
 **팀 구성** : 3인팀
 
-[Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 따라서 Toon Shader를 팀원들과 만들어보는 게 목표였습니다.
+---
 
+## 프로젝트 목표
+- [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 참고하여<br>
+  팀원들과 함께 **Toon Shader**를 공부하는 것을 목표로 하였습니다.
 
-아래 구현목록들은 팀원들과 Toon Shader 만든 걸 기반으로 제가 따로 유튜브 영상 찾아보면서 만든 요소들입니다.
+<br>
 
-TPS는 블루프린트로 구현한 유튜브 강의영상을 따라서 C++로 옮기는 작업을 해보고자 했었습니다.
-https://www.youtube.com/watch?v=H_Q57Yso9mM&list=PLY2663dNRL_iCP0xsW6xw0Ph94ApT7JrR
+---
 
-지형렌더링은 아래 유튜브 강의영상을 따라서 만들어보고자 하였습니다.
-https://www.youtube.com/watch?v=9ASgfwzNvL8&list=PLyL5ZNukfVqskz_OkMdrLamiYg1sITyic
+## 추가 구현 요소
+- 팀 프로젝트에서 만든 Toon Shader를 기반으로, 개인적으로 유튜브 강의들을 참고하여 아래 기능들을 구현해 보았습니다.
+- 유튜브 강의는 블루프린트로 보통 되어있기에 C++로 옮기는 작업을 하였었습니다.
+
+  <br>
+
+- **TPS 구현**  
+  - 참고 영상: [How To Create A Weapons System (2.0) - Unreal Engine 5 Tutorial](https://www.youtube.com/watch?v=H_Q57Yso9mM&list=PLY2663dNRL_iCP0xsW6xw0Ph94ApT7JrR)
+
+- **지형 렌더링**  
+  - 참고 영상: [Terrain generation for Beginners - Unreal Engine tutorial](https://www.youtube.com/watch?v=9ASgfwzNvL8&list=PLyL5ZNukfVqskz_OkMdrLamiYg1sITyic)
+
 
 
 
 <br>
 
+<br>
+
+---
 [유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
+
+---
 
 <br>
 
