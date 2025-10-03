@@ -11,9 +11,14 @@
 - [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 참고하여<br>
   팀원들과 함께 **Toon Shader**를 공부하는 것을 목표로 하였습니다.
 
-<br>
 
 ---
+[유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
+
+
+---
+
+<br>
 
 ## 추가 구현 요소
 - 팀 프로젝트에서 만든 Toon Shader를 기반으로, 개인적으로 유튜브 강의들을 참고하여 아래 기능들을 구현해 보았습니다.
@@ -32,14 +37,10 @@
 
 <br>
 
+
 <br>
 
 ---
-[유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
-
----
-
-<br>
 
 ## 구현 목록
 
