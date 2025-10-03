@@ -5,7 +5,7 @@
 **개발 기간** : 2달<br>
 **팀 구성** : 3인팀
 
-Unreal Engine에서의 Cartoon Shader 는 팀원들과 함께 같이 만들었으며, [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 많이 참고하였습니다.
+[Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 따라서 Toon Shader를 팀원들과 만들어보는 게 목표였고, 아래 요소들은 Toon Shader 만든 걸 기반으로 제가 따로 만든 요소들입니다.
 
 <br>
 
