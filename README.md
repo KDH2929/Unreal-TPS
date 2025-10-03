@@ -8,9 +8,10 @@
 ---
 
 ## 프로젝트 목표
-- [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 참고하여<br>
+- [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 따라서<br>
   팀원들과 함께 **Toon Shader**를 공부하는 것을 목표로 하였습니다.
 
+<br>
 
 ---
 [유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
