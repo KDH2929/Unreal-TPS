@@ -21,7 +21,7 @@
 
 <br>
 
-## 추가 구현 요소
+
 - 팀 프로젝트에서 만든 Toon Shader를 기반으로, 개인적으로 유튜브 강의들을 참고하여 아래 기능들을 구현해 보았습니다.
 - 유튜브 강의는 블루프린트로 보통 되어있기에 C++로 옮기는 작업을 하였었습니다.
 
@@ -122,18 +122,9 @@
 
 
 ## 구현 상세
-### 1. **총기류 클래스 구조도**
-<p align="left">
-  <img src="https://github.com/user-attachments/assets/ba820803-9eac-4ced-993c-9fefe5ecd33f" width="50%">
-</p>
 
-- 핵심 기능은 C++로 구현  
-- Skeletal Mesh 경로 설정, 총기별 메타데이터 설정은 Blueprint로 상속하여 설정
-- 몬스터, 아이템 클래스 역시 위와 비슷한 구조로 설계됨
 
-<br>
-
-### 2. **Raycast 기반 총알이 도달할 위치 계산**
+### 1. **Raycast 기반 총알이 도달할 위치**
 
 ```latex
 Camera Position + Forward Vector * WeaponRange  + R cosθ ⋅ Right Vector + R sinθ ⋅ Up Vector
@@ -145,9 +136,9 @@ Camera Position + Forward Vector * WeaponRange  + R cosθ ⋅ Right Vector + R s
 
 <br>
 
-### 3. **절차적 지형메시 생성**
+### 2. **절차적 지형메시 생성**
 
-#### 3.1 **Vertices 생성**
+#### 2.1 **Vertices 생성**
 
 - 정점 배열은 1차원 배열로 저장되며, Loop를 통해 생성
 - 정점의 X좌표와 Y좌표는 아래 그림의 예시와 같이 설정 
@@ -161,7 +152,7 @@ Camera Position + Forward Vector * WeaponRange  + R cosθ ⋅ Right Vector + R s
 
 <br>
 
-#### 3.2 **Indices 생성**
+#### 2.2 **Indices 생성**
 
 - 언리얼엔진에서는 Mesh 생성 시 삼각형 인덱스정보를 반시계방향으로 입력 시 `FrontFace`로 판단하고, 시계방향으로 입력 시 `BackFace`로 판단
 - 직사각형 메시를 만들기 위해 각 삼각형을 아래와 같이 구성
@@ -171,7 +162,7 @@ Camera Position + Forward Vector * WeaponRange  + R cosθ ⋅ Right Vector + R s
 
 <br>
 
-#### 3.3 **인덱스 계산 과정**
+#### 2.3 **인덱스 계산 과정**
 
 <p align="left">
   <img src="https://github.com/user-attachments/assets/875a4e18-5b03-401a-b384-219a296130a0" width="38%">
