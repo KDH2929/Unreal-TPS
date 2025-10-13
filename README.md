@@ -1,5 +1,6 @@
 # Unreal-TPS
-
+- Toon Shader 구현 : 3인팀
+- TPS 구현 : 개인프로젝트
 
 ---
 
