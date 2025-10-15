@@ -1,28 +1,23 @@
 # Unreal-TPS
+
 - Toon Shader 구현 : 3인팀
 - TPS 구현 : 개인프로젝트
+- [유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
+
+<br>
 
 ---
 
-## 프로젝트 목표
-- [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 따라서<br>
+## 프로젝트 개요
+- 먼저 [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz) 영상을 따라서<br>
   팀원들과 함께 **Toon Shader**를 공부하는 것을 목표로 하였습니다.
 
 <br>
 
----
-[유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
-
-
----
-
-<br>
-
-
-- 팀 프로젝트에서 만든 Toon Shader를 기반으로, 추가적으로 유튜브 강의들을 참고하여 아래 기능들을 제가 구현해 보았습니다.
+- 이후 팀 프로젝트에서 만든 Toon Shader를 기반으로, 추가적으로 유튜브 강의들을 참고하여 아래 기능들을 제가 구현해 보았습니다.
 - 유튜브 강의는 블루프린트로 보통 되어있기에 C++로 옮기는 작업을 하였었습니다.
 
-  <br>
+<br>
 
 - **TPS 구현**  
   - 참고 영상: [How To Create A Weapons System (2.0) - Unreal Engine 5 Tutorial](https://www.youtube.com/watch?v=H_Q57Yso9mM&list=PLY2663dNRL_iCP0xsW6xw0Ph94ApT7JrR)
