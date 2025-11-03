@@ -22,9 +22,6 @@
 - **TPS 구현**  
   - 참고 영상: [How To Create A Weapons System (2.0) - Unreal Engine 5 Tutorial](https://www.youtube.com/watch?v=H_Q57Yso9mM&list=PLY2663dNRL_iCP0xsW6xw0Ph94ApT7JrR)
 
-- **지형 렌더링**  
-  - 참고 영상: [Terrain generation for Beginners - Unreal Engine tutorial](https://www.youtube.com/watch?v=9ASgfwzNvL8&list=PLyL5ZNukfVqskz_OkMdrLamiYg1sITyic)
-
 
 
 
