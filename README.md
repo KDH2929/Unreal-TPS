@@ -1,6 +1,6 @@
 # Unreal-TPS
 
-- 유튜브 튜토리얼을 참고하여, 블루프린트로 구현된 TPS 예제를 C++로 전환하는 학습용 프로젝트
+- IK, AimOffset을 통한 Bone 회전의 경우 유튜브 영상을 참고하여 제작
 - 툰 쉐이더의 경우, 아는 지인이 같이 스터디해보자고 하여 공부하게 되었음
 
 <br>
@@ -13,7 +13,6 @@
 
 ## 참고자료
 - [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz)
-- [How To Create A Weapons System (2.0) - Unreal Engine 5 Tutorial](https://www.youtube.com/watch?v=H_Q57Yso9mM&list=PLY2663dNRL_iCP0xsW6xw0Ph94ApT7JrR)
 
 <br>
 
