@@ -1,19 +1,6 @@
 # Unreal-TPS
 
 - 제작인원 : 3인
-- IK, AimOffset을 통한 Bone 회전의 경우 유튜브 영상을 참고하여 제작
-- 툰 쉐이더의 경우, 아는 지인이 같이 스터디해보자고 하여 공부하게 되었습니다.
-
-<br>
-
-- [유튜브 영상 및 다운로드 링크](https://youtu.be/Q7WIUYH8JqI?si=F-wGc_7AaTSI5MV9)
-
-<br>
-
----
-
-## 참고자료
-- [Unreal Fest 카툰렌더링](https://youtu.be/sXIAIOuGee4?si=txHLi6Ylrb8GgqSz)
 
 <br>
 
